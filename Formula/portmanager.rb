@@ -5,7 +5,7 @@ class Portmanager < Formula
   license "MIT"
 
   url "file:///tmp/portmanager-source.tar.gz"
-  sha256 "41b1521d4cb831e851e6203fa6fddbdf2b03fc2c17e929e7c05cfe915ad050b0"
+  sha256 "9c304e62fc95c82f2882801879611e02d97403f75b70dd8226269962efa76485"
 
   depends_on "rust" => :build
 
