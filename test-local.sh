@@ -11,19 +11,20 @@ echo ""
 # Step 1: Stop existing daemon if running
 echo "1. Stopping existing daemon..."
 launchctl stop com.bruchmann-tec.portmanager 2>/dev/null || true
+brew services stop portmanager 2>/dev/null || true
 killall portmanager-daemon 2>/dev/null || true
 sleep 1
 
-# Step 2: Create tarball
+# Step 2: Create tarball with root directory
 echo "2. Creating source tarball..."
-cd "$PROJECT_ROOT"
 TARBALL="/tmp/portmanager-source.tar.gz"
-tar -czf "$TARBALL" \
-    --exclude='target' \
-    --exclude='node_modules' \
-    --exclude='.git' \
-    --exclude='homebrew-tap' \
-    port_manager
+TMPDIR="/tmp/portmanager-build"
+rm -rf "$TMPDIR"
+mkdir -p "$TMPDIR/portmanager-0.1.0"
+cp -r "$PROJECT_ROOT/port_manager" "$TMPDIR/portmanager-0.1.0/"
+cd "$TMPDIR"
+tar -czf "$TARBALL" portmanager-0.1.0
+rm -rf "$TMPDIR"
 
 # Step 3: Calculate SHA256
 echo "3. Calculating checksum..."
@@ -87,6 +88,12 @@ class Portmanager < Formula
 end
 EOF
 
+# Step 4b: Commit the updated formula
+echo "4b. Committing formula update..."
+cd "$TAP_DIR"
+git add Formula/portmanager.rb
+git commit -m "Update checksum for local testing" 2>/dev/null || true
+
 # Step 5: Uninstall previous version if exists
 echo "5. Removing previous installation..."
 brew uninstall portmanager 2>/dev/null || true
@@ -97,7 +104,7 @@ echo "6. Tapping local repository..."
 brew tap bruchmann-tec/tap "$TAP_DIR"
 
 # Step 7: Install
-echo "7. Installing portmanager..."
+echo "7. Installing portmanager (this may take a while - compiling Rust)..."
 brew install bruchmann-tec/tap/portmanager
 
 # Step 8: Start service
@@ -109,13 +116,13 @@ sleep 2
 echo "9. Testing..."
 echo ""
 echo "--- portctl list ---"
-portctl list || echo "(no leases yet)"
+/opt/homebrew/bin/portctl list || echo "(no leases yet)"
 echo ""
 echo "--- Daemon status ---"
 brew services list | grep portmanager
 echo ""
-echo "--- Dashboard ---"
-curl -s http://localhost:3030 | head -5
+echo "--- Dashboard check ---"
+curl -s http://localhost:3030 | head -3
 echo ""
 
 echo ""

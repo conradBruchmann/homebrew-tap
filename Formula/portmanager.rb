@@ -4,8 +4,8 @@ class Portmanager < Formula
   version "0.1.0"
   license "MIT"
 
-  url "file:///tmp/portmanager-source.tar.gz"
-  sha256 "9c304e62fc95c82f2882801879611e02d97403f75b70dd8226269962efa76485"
+  url "https://github.com/conradBruchmann/PortManager/archive/refs/tags/v0.1.0.tar.gz"
+  sha256 "3077ba1a9871f5e2369fdb823afcebebb69824c72230958c710ec8920a449a94"
 
   depends_on "rust" => :build
 
