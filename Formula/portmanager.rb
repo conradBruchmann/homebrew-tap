@@ -37,7 +37,8 @@ class Portmanager < Formula
         portmanager-daemon
 
 
-      Dashboard: http://localhost:3030
+      Dashboard: http://localhost:7878
+        (override via PM_DASHBOARD_PORT)
 
 
       Usage:
