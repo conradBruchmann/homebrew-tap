@@ -1,12 +1,12 @@
 class Portmanager < Formula
   desc "Localhost Control Plane - Central port allocation for local development"
   homepage "https://github.com/bruchmann-tec/portmanager"
-  version "0.1.0"
+  version "0.2.0"
   license "MIT"
 
 
-  url "https://github.com/conradBruchmann/PortManager/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "3077ba1a9871f5e2369fdb823afcebebb69824c72230958c710ec8920a449a94"
+  url "https://github.com/conradBruchmann/PortManager/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "9ab3e005fc06da7265553f04b9b853591ebf543ccfdb697b062b82df52d27a68"
 
 
   depends_on "rust" => :build
