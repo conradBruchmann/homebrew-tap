@@ -47,4 +47,12 @@ class Portmanager < Formula
         portctl lookup my-service
     EOS
   end
+
+  service do
+    run [opt_bin/"portmanager-daemon"]
+    keep_alive true
+    log_path var/"log/portmanager.log"
+    error_log_path var/"log/portmanager.error.log"
+    working_dir var/"portmanager"
+  end
 end
