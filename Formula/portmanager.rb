@@ -44,3 +44,7 @@ class Portmanager < Formula
       Usage:
         portctl run my-service -- npm start
         portctl list
+        portctl lookup my-service
+    EOS
+  end
+end
